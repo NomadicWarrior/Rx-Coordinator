@@ -25,7 +25,7 @@ class MoviesController: UIViewController {
     
     var disposeBag = DisposeBag()
     
-    var movies = ["Movie 1", "Movie 2", "Movie 3"]
+    var movies = Observable.just(["Movie 1", "Movie 2", "Movie 3"])
     
     init(coordinator: MainCoordinator) {
         self.coordinator = coordinator
@@ -41,8 +41,9 @@ class MoviesController: UIViewController {
         
         design()
         
-        
-        //tableview.rx.items(cellIdentifier: "cell", cellType: UITableViewCell.self){ row, item, cell in
+        movies.bind(to: tableview.rx.items(cellIdentifier: "cell", cellType: UITableViewCell.self)) { row, item, cell in
+            cell.textLabel?.text = item
+        }.disposed(by: disposeBag)
             
     }
     
