@@ -19,8 +19,13 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(homeController, animated: false)
     }
     
+    func openMoviesController() {
+        let moviesController = MoviesController(coordinator: self)
+        push(controller: moviesController)
+    }
+    
     func openMovieController() {
-        let movieController = MoviesController(coordinator: self)
+        let movieController = MovieController()
         push(controller: movieController)
     }
     

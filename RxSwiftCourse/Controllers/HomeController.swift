@@ -39,7 +39,7 @@ class HomeController: UIViewController {
         
         simpleRxBtn.rx.tap
             .bind { (tap) in
-                self.coordinator.openMovieController()
+                self.coordinator.openMoviesController()
             }.disposed(by: disposeBag)
     }
     

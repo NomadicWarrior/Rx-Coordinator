@@ -41,9 +41,7 @@ class MoviesController: UIViewController {
         
         design()
         
-        movies.bind(to: tableview.rx.items(cellIdentifier: "cell", cellType: UITableViewCell.self)) { row, item, cell in
-            cell.textLabel?.text = item
-        }.disposed(by: disposeBag)
+        setupTableView()
             
     }
     
@@ -81,16 +79,23 @@ extension MoviesController {
     }
 }
 
- /*extension MoviesController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+// MARK: - Table View
+extension MoviesController: UITableViewDelegate {
+    private func setupTableView() {
+        tableview.delegate = self
+        
+        movies.bind(to: tableview.rx.items(cellIdentifier: "cell", cellType: UITableViewCell.self)) { row, item, cell in
+            cell.textLabel?.text = item
+        }.disposed(by: disposeBag)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableview.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? UITableViewCell else { fatalError("No Cell") }
-        cell.textLabel?.text = "Movies"
-        return cell
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableview.deselectRow(at: indexPath, animated: true)
+        
+        coordinator.openMovieController()
     }
     
-    
-}*/
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
+}
