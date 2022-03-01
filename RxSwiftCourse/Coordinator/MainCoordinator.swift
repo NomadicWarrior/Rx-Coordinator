@@ -20,12 +20,13 @@ class MainCoordinator: Coordinator {
     }
     
     func openMoviesController() {
-        let moviesController = MoviesController(coordinator: self)
+        let viewModel = MoviesViewModel()
+        let moviesController = MoviesController(coordinator: self, viewModel: viewModel)
         push(controller: moviesController)
     }
     
-    func openMovieController() {
-        let movieController = MovieController()
+    func openMovieController(viewModel: MovieViewModel) {
+        let movieController = MovieController(viewModel: viewModel)
         push(controller: movieController)
     }
     
